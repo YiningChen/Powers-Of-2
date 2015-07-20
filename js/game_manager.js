@@ -8,6 +8,7 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
 
   this.inputManager.on("move", this.move.bind(this));
   this.inputManager.on("restart", this.restart.bind(this));
+  this.inputManager.on("switchAll", this.switchAll.bind(this));
   this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
 
   this.setup();
@@ -270,3 +271,25 @@ GameManager.prototype.tileMatchesAvailable = function () {
 GameManager.prototype.positionsEqual = function (first, second) {
   return first.x === second.x && first.y === second.y;
 };
+
+GameManager.prototype.switchAll = function() {
+  var self = this;
+  var tile;
+
+  for (var x = 0; x < this.size; x++) {
+    for (var y = 0; y < this.size; y++) {
+      tile = this.grid.cellContent({ x: x, y: y });
+      if (tile) {
+        if (tile.currentview == 'value') {
+          tile.view = exponentView(tile.value);
+          tile.currentview = 'expon';
+        } else {
+          tile.view = tile.value;
+          tile.currentview = 'value'
+        }
+      }
+    }
+  }
+  this.prepareTiles();
+  this.actuator.refresh(this.grid,true);
+}

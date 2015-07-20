@@ -16,7 +16,7 @@ body {
   clear: both; }
 
 h1.title {
-  font-size: 46px;
+  font-size: 40px;
   font-weight: bold;
   margin: 0;
   display: block;
@@ -232,6 +232,7 @@ hr {
   width: 107px;
   height: 107px;
   line-height: 107px; }
+
 .tile.tile-position-1-1 {
   -webkit-transform: translate(0px, 0px);
   -moz-transform: translate(0px, 0px);
@@ -305,6 +306,7 @@ hr {
   -webkit-transition-property: -webkit-transform;
   -moz-transition-property: -moz-transform;
   transition-property: transform; }
+
   .tile .tile-inner {
     border-radius: 3px;
     background: #eee4da;
@@ -511,7 +513,7 @@ hr {
     padding: 0 20px; }
 
   h1.title {
-    font-size: 20px;
+    font-size: 15px;
     margin-top: 15px; }
 
   .container {
@@ -709,3 +711,4 @@ hr {
     margin-top: 90px !important; }
   .game-message .lower {
     margin-top: 30px !important; } }
+

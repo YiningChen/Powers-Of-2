@@ -11,15 +11,7 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
   var self = this;
 
   window.requestAnimationFrame(function () {
-    self.clearContainer(self.tileContainer);
-
-    grid.cells.forEach(function (column) {
-      column.forEach(function (cell) {
-        if (cell) {
-          self.addTile(cell);
-        }
-      });
-    });
+    self.refresh(grid,false);
 
     self.updateScore(metadata.score);
     self.updateBestScore(metadata.bestScore);
@@ -35,6 +27,20 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
   });
 };
 
+HTMLActuator.prototype.refresh = function(grid,createnew) {
+  var self = this;
+
+  self.clearContainer(self.tileContainer);
+
+  grid.cells.forEach(function (column) {
+    column.forEach(function (cell) {
+      if (cell) {
+        self.addTile(cell,createnew);
+      }
+    });
+  });
+}
+
 // Continues the game (both restart and keep playing)
 HTMLActuator.prototype.continueGame = function () {
   this.clearMessage();
@@ -46,7 +52,7 @@ HTMLActuator.prototype.clearContainer = function (container) {
   }
 };
 
-HTMLActuator.prototype.addTile = function (tile) {
+HTMLActuator.prototype.addTile = function (tile, createnew) {
   var self = this;
 
   var wrapper   = document.createElement("div");
@@ -64,13 +70,13 @@ HTMLActuator.prototype.addTile = function (tile) {
   inner.classList.add("tile-inner");
   inner.innerHTML = tile.view
 
-  if (tile.previousPosition) {
+  if (tile.previousPosition && !createnew) {
     // Make sure that the tile gets rendered in the previous position first
     window.requestAnimationFrame(function () {
       classes[2] = self.positionClass({ x: tile.x, y: tile.y });
       self.applyClasses(wrapper, classes); // Update the position
     });
-  } else if (tile.mergedFrom) {
+  } else if (tile.mergedFrom && !createnew) {
     classes.push("tile-merged");
     this.applyClasses(wrapper, classes);
 

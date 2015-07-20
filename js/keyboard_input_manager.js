@@ -66,6 +66,11 @@ KeyboardInputManager.prototype.listen = function () {
     if (!modifiers && event.which === 82) {
       self.restart.call(self, event);
     }
+
+    if (!modifiers && event.which === 88) {
+      self.emit("switchAll");
+
+    }
   });
 
   // Respond to button presses
